@@ -32,8 +32,17 @@ def main1():
     print(ans)
 
 def main2():
-    lines = read_file(INPUT_FILE)
-    
+    lines = iter(read_file(INPUT_FILE))
+    ans = 0
+    while True:
+        try:
+            l, ll, lll = next(lines), next(lines), next(lines)
+        except:  # end of the file
+            break
+        common = set(l) & set(ll) & set(lll)
+        ans += MAPPER.index(common.pop()) + 1
+    print(ans)
+
 if __name__ == "__main__":
     main1()
     main2()
