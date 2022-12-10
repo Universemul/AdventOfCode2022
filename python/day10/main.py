@@ -39,9 +39,30 @@ def main1():
     print(sum(stack))
 
 
-
 def main2():
     lines = read_file(INPUT_FILE)
+    cycle = 0
+    register = 1
+    crt = ["." for _ in range(240)]
+
+    def add_pixel_to_crt():
+        nonlocal cycle
+        nonlocal crt
+        pos_pixel = cycle % 40
+        marker = "#" if abs(register - pos_pixel) <= 1 else "."
+        crt[cycle % 240] = marker
+        cycle += 1
+
+    for line in lines:
+        if line.startswith("noop"):
+            add_pixel_to_crt()
+        else:
+            add_pixel_to_crt()
+            add_pixel_to_crt()
+            buffer = int(line.split()[1])
+            register += buffer
+    for idx in range(0, 240, 40):
+        print("".join(crt[idx:idx+40]))
     
 if __name__ == "__main__":
     main1()
